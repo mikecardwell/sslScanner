@@ -1,0 +1,43 @@
+* Author: Mike Cardwell <sslscanner@grepular.com> https://secure.grepular.com/
+
+sslScanner is an open source Perl application which connects to a range of
+hosts/ports which are running SSL based services such as HTTPS. It then displays
+the certificate CN and how long is left until the certificate expires. Example:
+
+mike@haven:~$ sslScanner --timeout 5 --expires-within 400 smtp.googlemail.com:465 haven.grepular.com 158.125.1.208/32
+     IP Address   Port  Days Left  Common Name
+   74.125.77.16    465        140  smtp.googlemail.com
+  92.48.122.147    443        246  secure.grepular.com
+  158.125.1.208    443        358  www.lboro.ac.uk
+mike@haven:~$
+
+If you want to be alerted when your certificate has less than 7 days left before
+expiry, you might create a simple cron job like this:
+
+@daily sslScanner --expires-within 7 example.com:443
+
+Here are the usage details:
+
+Usage:
+
+1.) sslScanner <Options> <Hosts>
+2.) cat Hosts_List.txt | sslScanner <Options>
+
+Hosts:
+  Any number of hosts can be scanned. They must each adhere to one of
+  the following formats:
+
+  x.x.x.x           : IP address
+  x.x.x.x/cidr      : CIDR network. Requires Net::Netmask
+  x.x.x.x:port      : IP address with port
+  x.x.x.x/cidr:port : CIDR network and port. Requires Net::Netmask
+  example.com       : Domain name
+  example.com:port  : Domain name with port
+
+  The port defaults to 443 (https) if not provided
+
+Options:
+  --help or -h          : Display this help information and exit
+  --timeout secs        : Connection timeout. Default is 10
+  --expires-within days : Only display info for those certs which
+                          expire within x days, or that fail to lookup
