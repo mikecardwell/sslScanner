@@ -28,16 +28,24 @@ Hosts:
   the following formats:
 
   x.x.x.x           : IP address
-  x.x.x.x/cidr      : CIDR network. Requires Net::Netmask
+  x.x.x.x/cidr      : CIDR network. Requires NetAddr::IP
   x.x.x.x:port      : IP address with port
-  x.x.x.x/cidr:port : CIDR network and port. Requires Net::Netmask
+  x.x.x.x/cidr:port : CIDR network and port. Requires NetAddr::IP
   example.com       : Domain name
   example.com:port  : Domain name with port
 
   The port defaults to 443 (https) if not provided
 
+IPv6/IPv4 notes:
+  x.x.x.x in all of the above examples can be replaced with an IPv6 address,
+  surrounded by square brackets. By default, we do both IPv6 and IPv4 checks.
+  If you use either --ipv4 or --ipv6, then only IPv4 or IPv6 checks will take
+  place.
+
 Options:
   --help or -h          : Display this help information and exit
+  --ipv6                : Enable IPv6 checks
+  --ipv4                : Enable IPv4 checks
   --timeout secs        : Connection timeout. Default is 10
   --expires-within days : Only display info for those certs which
                           expire within x days, or that fail to lookup
