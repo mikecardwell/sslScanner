@@ -40,7 +40,7 @@ IPv6/IPv4 notes:
   x.x.x.x in all of the above examples can be replaced with an IPv6 address,
   surrounded by square brackets. By default, we do both IPv6 and IPv4 checks.
   If you use either --ipv4 or --ipv6, then only IPv4 or IPv6 checks will take
-  place.
+  place when a hostname is looked up.
 
 Options:
   --help or -h          : Display this help information and exit
