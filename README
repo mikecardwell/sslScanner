@@ -1,5 +1,19 @@
 * Author: Mike Cardwell <sslscanner@grepular.com> https://secure.grepular.com/
 
+################################### <IMPORTANT> ###################################
+
+This is currently a separate branch rather than the Master branch because IPv6
+will not work until the patch I supplied for Net::SSL::ExpireDate is applied. The
+bug report and patch can be viewed at:
+
+https://rt.cpan.org/Public/Bug/Display.html?id=62236
+
+If you apply that patch manually on your system, then this IPv6 version will work
+fine. Once that patch has been applied, I will merge this branch into the master
+branch and delete this one.
+
+################################### </IMPORTANT> ###################################
+
 sslScanner is an open source Perl application which connects to a range of
 hosts/ports which are running SSL based services such as HTTPS. It then displays
 the certificate CN and how long is left until the certificate expires. Example:
