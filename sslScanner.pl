@@ -72,10 +72,10 @@
   }
 
 ## Check for IPv6 support
-  if( defined $ipv6 ){
+  if( $ipv6 ){
      eval 'use IO::Socket::INET6';
      die "Disable IPv6 with the --ipv4 option, or install IO::Socket::INET6\n" if $@;
-     die "Upgrade to v1.07 or above of Net::SSL::ExpireDate, or disable IPv6 with the --ipv4 option\n" if $Net::SSL::ExpireDate::VERSION < 1.07;
+     die "Upgrade to v1.08 or above of Net::SSL::ExpireDate, or disable IPv6 with the --ipv4 option\n" if $Net::SSL::ExpireDate::VERSION < 1.08;
   }
 
 ## Global store for preventing duplicate checks
