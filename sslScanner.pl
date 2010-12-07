@@ -101,7 +101,7 @@
         } elsif( $arg =~ m#^\[([a-f0-9:]+)\]$#i ){
            ## IPv6
              process( $1, $port );
-        } elsif( $arg =~ m#^((\d{1,3}(?:\.\d{1,3}){3}))/(\d+)$# || $arg =~ m#^\[([a-f0-9:]+)\]/(\d+)$#i ){
+        } elsif( $arg =~ m#^(\d{1,3}(?:\.\d{1,3}){3})/(\d+)$# || $arg =~ m#^\[([a-f0-9:]+)\]/(\d+)$#i ){
            ## IP/Net
              unless( $netaddr_ip_required ){
                 eval 'use NetAddr::IP'; die "You must install NetAddr::IP to use network notation in your list\n" if $@;
