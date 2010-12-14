@@ -166,7 +166,8 @@ sub process {
     die "FAIL\n" unless $cert;
 
    ## Retrieve the CN
-     my( $cn ) = $cert->subject() =~ /^(?:.+? )?CN=([-\*\.a-zA-Z0-9]+)/; $cn = 'Unknown' unless defined $cn;
+     my $cn = join( ', ', map {/^CN=(.+)/;$1} grep( /^CN=\S+$/, split( /\s*,\s*/, $cert->subject() ) ) );
+     $cn = 'Unknown' unless $cn;
 
    ## Calculate how long the cert has left, given the expiry date
      my $days_left = int( ( str2time( $cert->notAfter() ) - time ) / 86400 );
@@ -176,7 +177,7 @@ sub process {
 
    ## Send the table header
      unless( $header_printed ){
-        printf("%".($ipv6?41:15)."s  %5s  %9s  %s\n", 'IP Address', 'Port', 'Days Left', 'Common Name' );
+        printf("%".($ipv6?39:15)."s  %5s  %9s  %s\n", 'IP Address', 'Port', 'Days Left', 'Common Name' );
         $header_printed = 1;
      }
 
