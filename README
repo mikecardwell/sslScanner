@@ -1,4 +1,4 @@
-* Author: Mike Cardwell <sslscanner@grepular.com> https://secure.grepular.com/
+* Author: Mike Cardwell <sslscanner@grepular.com> https://grepular.com/
 
 sslScanner is an open source Perl application which connects to a range of
 hosts/ports which are running SSL based services such as HTTPS. It then displays
