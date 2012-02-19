@@ -49,3 +49,13 @@ Options:
   --timeout secs        : Connection timeout. Default is 10
   --expires-within days : Only display info for those certs which
                           expire within x days, or that fail to lookup
+
+
+Install requirements
+--------------------
+
+sudo apt-get install libssl-dev
+sudo cpan Crypt::OpenSSL::X509
+sudo cpan Net::SSL::ExpireDate
+sudo cpan IO::Socket::INET6 (only for IPv6 support)
+
