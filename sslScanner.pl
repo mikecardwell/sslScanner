@@ -91,16 +91,17 @@
      my $res; # DNS Resolver
      while( @arguments ){
         my $arg = shift @arguments;
+        my $original_arg = $arg;
 
         ## Get the port
           my $port = 443; ( $arg, $port ) = ( $1, $2, ) if $arg =~ /^(.+):(\d+)$/;
 
         if( $arg =~ m#^\d{1,3}(\.\d{1,3}){3}$# ){
            ## IPv4
-             process( $arg, $port );
+             process( $arg, $port, $original_arg );
         } elsif( $arg =~ m#^\[([a-f0-9:]+)\]$#i ){
            ## IPv6
-             process( $1, $port );
+             process( $1, $port, $original_arg);
         } elsif( $arg =~ m#^(\d{1,3}(?:\.\d{1,3}){3})/(\d+)$# || $arg =~ m#^\[([a-f0-9:]+)\]/(\d+)$#i ){
            ## IP/Net
              unless( $netaddr_ip_required ){
@@ -111,7 +112,7 @@
            my $net = NetAddr::IP->new( "$1/$2" );
            for( my $i = 0, my $n = $net->num(); $i < $n; ++$i ){
               my( $host ) = $net->nth($i) =~ /^(.+)\//;
-              process( lc($host), $port );
+              process( lc($host), $port, $original_arg );
            }
 
         } elsif( $arg =~ m#^(?:[-a-z0-9]+\.)+(?:[-a-z0-9]{2,})$#i ){
@@ -130,7 +131,7 @@
               my $query = $res->query( $arg, $type );
               my @ips = $query ? map {$_->address} grep( $_->type eq $type, $query->answer ) : ();
               $found_ips += int(@ips);
-              process( $_, $port ) foreach @ips;
+              process( $_, $port, $original_arg ) foreach @ips;
            }
            warn "Failed on \"$arg\" - Error: Unable to resolve any IPs\n" unless $found_ips;
         } else {
@@ -140,7 +141,7 @@
   }
 
 sub process {
-   my( $ip, $port, ) = @_;
+   my( $ip, $port, $original_arg ) = @_;
 
    ## Prevent duplicates
      return if exists $done{"$ip:$port"};
@@ -177,12 +178,12 @@ sub process {
 
    ## Send the table header
      unless( $header_printed ){
-        printf("%".($ipv6?39:15)."s  %5s  %9s  %s\n", 'IP Address', 'Port', 'Days Left', 'Common Name' );
+        printf("%".($ipv6?39:15)."s  %5s  %9s  %s\n", 'IP Address', 'Port', 'Days Left', 'Input Arg -> Cert Common Name' );
         $header_printed = 1;
      }
 
    ## Output results
-     printf("%".($ipv6?39:15)."s  %5s  %9s  %s\n", $ip, $port, $days_left, $cn );
+     printf("%".($ipv6?39:15)."s  %5s  %9s  %s -> %s\n", $ip, $port, $days_left, $original_arg, $cn );
 }
 
 sub usage {
