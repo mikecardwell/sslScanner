@@ -5,10 +5,10 @@ hosts/ports which are running SSL based services such as HTTPS. It then displays
 the certificate CN and how long is left until the certificate expires. Example:
 
 mike@haven:~$ sslScanner --timeout 5 --expires-within 400 smtp.googlemail.com:465 haven.grepular.com 158.125.1.208/32
-     IP Address   Port  Days Left  Common Name
-   74.125.77.16    465        140  smtp.googlemail.com
-  92.48.122.147    443        246  secure.grepular.com
-  158.125.1.208    443        358  www.lboro.ac.uk
+     IP Address   Port  Days Left  Input Arg -> Cert Common Name
+   74.125.77.16    465        140  smtp.googlemail.com:465 -> smtp.googlemail.com
+  92.48.122.147    443        246  haven.grepular.com -> secure.grepular.com
+  158.125.1.208    443        358  158.125.1.208/32 -> www.lboro.ac.uk
 mike@haven:~$
 
 If you want to be alerted when your certificate has less than 7 days left before
